@@ -11,6 +11,8 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var itemArray = ["Find", "Search", "Milk"]
     
+    let defaults = UserDefaults.standard
+    
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +34,10 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         searchBar.delegate = self
         toDoTableView.dataSource = self
         toDoTableView.delegate = self
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = items
+        }
         
         setupUI()
         makeConstraints()
@@ -75,6 +81,9 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             
             self.itemArray.append(textField.text!)
+            
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
+            
             self.toDoTableView.reloadData()
         }
         
