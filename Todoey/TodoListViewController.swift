@@ -9,7 +9,7 @@ import UIKit
 
 class TodoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
-    let itemArray = ["Find", "Search", "Milk"]
+    var itemArray = ["Find", "Search", "Milk"]
     
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -28,7 +28,7 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Todoey"
-        //        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem))
         searchBar.delegate = self
         toDoTableView.dataSource = self
         toDoTableView.delegate = self
@@ -55,7 +55,7 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: TableView Delegate Methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print(itemArray[indexPath.row])
+        //        print(itemArray[indexPath.row])
         
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
@@ -64,6 +64,27 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    // MARK: Add New Items
+    @objc func addItem(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            
+            self.itemArray.append(textField.text!)
+            self.toDoTableView.reloadData()
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     
     func setupUI() {
