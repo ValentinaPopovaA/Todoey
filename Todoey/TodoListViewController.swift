@@ -52,6 +52,20 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell
     }
     
+    // MARK: TableView Delegate Methods
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        print(itemArray[indexPath.row])
+        
+        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        } else {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func setupUI() {
         view.backgroundColor = .systemMint
         view.addSubview(searchBar)
