@@ -38,7 +38,6 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let newItem = Item()
         newItem.title = "Find Mike"
-        newItem.done = true
         itemArray.append(newItem)
         
         let newItem2 = Item()
@@ -49,9 +48,9 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         newItem3.title = "Milk"
         itemArray.append(newItem3)
         
-//        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
-//            itemArray = items
-//        }
+        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
+            itemArray = items
+        }
         
         setupUI()
         makeConstraints()
