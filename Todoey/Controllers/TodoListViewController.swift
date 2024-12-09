@@ -69,12 +69,8 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         let item = itemArray[indexPath.row]
         cell.itemLabel.text = item.title
         
-        if item.done == true {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
-        
+        cell.accessoryType = item.done ? .checkmark : .none
+ 
         return cell
     }
     
