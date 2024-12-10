@@ -36,21 +36,7 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
     
         print(dataFilePath)
         
-        let newItem = Item()
-        newItem.title = "Find Mike"
-        itemArray.append(newItem)
-        
-        let newItem2 = Item()
-        newItem2.title = "Eggs"
-        itemArray.append(newItem2)
-        
-        let newItem3 = Item()
-        newItem3.title = "Milk"
-        itemArray.append(newItem3)
-        
-//        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
-//            itemArray = items
-//        }
+        loadItems()
         
         setupUI()
         makeConstraints()
@@ -121,6 +107,17 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         self.toDoTableView.reloadData()
+    }
+    
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error decoding item array, \(error)")
+            }
+        }
     }
     
     func setupUI() {
