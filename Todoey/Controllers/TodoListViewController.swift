@@ -141,3 +141,14 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 }
 
+class Solution {
+    func runningSum(_ nums: [Int]) -> [Int] {
+        var result = [Int]()
+        var sum = 0
+        for num in nums {
+            sum = sum + num
+        }
+        result.append(sum)
+        return result
+    }
+}
