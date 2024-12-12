@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class TodoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class TodoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var itemArray = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -36,7 +36,7 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         toDoTableView.delegate = self
     
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
+
         loadItems()
         
         setupUI()
@@ -110,8 +110,7 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.toDoTableView.reloadData()
     }
     
-    func loadItems() {
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
         do {
             itemArray = try context.fetch(request)
         } catch {
@@ -137,5 +136,19 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
             toDoTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             toDoTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+}
+
+// MARK: - Search bar methods
+
+extension TodoListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        loadItems(with: request)
     }
 }
