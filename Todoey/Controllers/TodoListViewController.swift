@@ -37,7 +37,7 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
     
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-//        loadItems()
+        loadItems()
         
         setupUI()
         makeConstraints()
@@ -66,7 +66,7 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
-        self.saveItems()
+        saveItems()
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -107,16 +107,14 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         self.toDoTableView.reloadData()
     }
     
-//    func loadItems() {
-//        if let data = try? Data(contentsOf: dataFilePath!) {
-//            let decoder = PropertyListDecoder()
-//            do {
-//                itemArray = try decoder.decode([Item].self, from: data)
-//            } catch {
-//                print("Error decoding item array, \(error)")
-//            }
-//        }
-//    }
+    func loadItems() {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+    }
     
     func setupUI() {
         view.backgroundColor = .systemMint
