@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     var itemArray = [Item]()
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appending(path: "Items.plist")
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -36,7 +38,7 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
     
         print(dataFilePath)
         
-        loadItems()
+//        loadItems()
         
         setupUI()
         makeConstraints()
@@ -77,9 +79,9 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-            
-            let newItem = Item()
+            let newItem = Item(context: self.context)
             newItem.title = textField.text!
+            newItem.done = false
             self.itemArray.append(newItem)
             
             self.saveItems()
@@ -97,28 +99,25 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: - Model Manupulation Methods
     
     func saveItems() {
-        let encoder = PropertyListEncoder()
-        
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)
+            try context.save()
         } catch {
-            print("Error encoding item array, \(error)")
+            print("Error saving context \(error)")
         }
         
         self.toDoTableView.reloadData()
     }
     
-    func loadItems() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                itemArray = try decoder.decode([Item].self, from: data)
-            } catch {
-                print("Error decoding item array, \(error)")
-            }
-        }
-    }
+//    func loadItems() {
+//        if let data = try? Data(contentsOf: dataFilePath!) {
+//            let decoder = PropertyListDecoder()
+//            do {
+//                itemArray = try decoder.decode([Item].self, from: data)
+//            } catch {
+//                print("Error decoding item array, \(error)")
+//            }
+//        }
+//    }
     
     func setupUI() {
         view.backgroundColor = .systemMint
@@ -138,17 +137,5 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
             toDoTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             toDoTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-    }
-}
-
-class Solution {
-    func runningSum(_ nums: [Int]) -> [Int] {
-        var result = [Int]()
-        var sum = 0
-        for num in nums {
-            sum = sum + num
-        }
-        result.append(sum)
-        return result
     }
 }
