@@ -11,7 +11,6 @@ import CoreData
 class TodoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     var itemArray = [Item]()
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appending(path: "Items.plist")
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     let searchBar: UISearchBar = {
@@ -36,7 +35,7 @@ class TodoListViewController: UIViewController, UITableViewDataSource, UITableVi
         toDoTableView.dataSource = self
         toDoTableView.delegate = self
     
-        print(dataFilePath)
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
 //        loadItems()
         
