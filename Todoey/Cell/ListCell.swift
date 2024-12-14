@@ -43,6 +43,6 @@ class ListCell: UITableViewCell {
             itemLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             itemLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             itemLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            ])
+        ])
     }
 }

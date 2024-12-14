@@ -15,6 +15,7 @@
 		A72A359C2D0220C2001CD769 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A72A359A2D0220C2001CD769 /* LaunchScreen.storyboard */; };
 		A72A35A42D022322001CD769 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A35A32D022322001CD769 /* ListCell.swift */; };
 		A72A35A62D02233F001CD769 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A35A52D02233F001CD769 /* CategoryCell.swift */; };
+		A72A35AE2D0C398E001CD769 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A35AD2D0C398D001CD769 /* CategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		A72A359D2D0220C2001CD769 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A72A35A32D022322001CD769 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		A72A35A52D02233F001CD769 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		A72A35AD2D0C398D001CD769 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 		A72A35AB2D06D60E001CD769 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A72A35AD2D0C398D001CD769 /* CategoryViewController.swift */,
 				A72A35902D0220BE001CD769 /* TodoListViewController.swift */,
 			);
 			path = Controllers;
@@ -177,6 +180,7 @@
 			files = (
 				A72A35912D0220BE001CD769 /* TodoListViewController.swift in Sources */,
 				A72A358D2D0220BE001CD769 /* AppDelegate.swift in Sources */,
+				A72A35AE2D0C398E001CD769 /* CategoryViewController.swift in Sources */,
 				A72A358F2D0220BE001CD769 /* SceneDelegate.swift in Sources */,
 				A72A35A42D022322001CD769 /* ListCell.swift in Sources */,
 				A72A35972D0220BF001CD769 /* Todoey.xcdatamodeld in Sources */,
