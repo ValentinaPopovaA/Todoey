@@ -31,15 +31,12 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
         
         setupUI()
         makeContstraints()
-    }
-    
-    @objc func addButtonPressed() {
-        
+        loadCategories()
     }
     
     // MARK: - TableView DataSource Methods
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
     }
     
@@ -47,18 +44,65 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifire, for: indexPath) as! CategoryCell
         
         let category = categories[indexPath.row]
-//        cell.categoryLabel.text = categories[indexPath.row].name
+        cell.categoryLabel.text = category.name
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+    // MARK: - TableView Delegate Methods
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let todoListVC = TodoListViewController()
+        if let indexPath = tableView.indexPathForSelectedRow {
+            
+        }
+        saveCategories()
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    // MARK: - TableView Delegate Methods
+    @objc func addButtonPressed() {
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Category", style: .default) { (acion) in
+            let newCategory = CategoryModel(context: self.context)
+            newCategory.name = textField.text!
+            
+            self.categories.append(newCategory)
+            self.saveCategories()
+        }
+        
+        alert.addTextField { (alertTextField) in
+            textField = alertTextField
+            alertTextField.placeholder = "Create new category"
+        }
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
     
     // MARK: - Data Manipulation Methods
+    func saveCategories() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context \(error)")
+        }
+        
+        categoryTableView.reloadData()
+    }
+    
+    func loadCategories() {
+        let request : NSFetchRequest<CategoryModel> = CategoryModel.fetchRequest()
+        
+        do {
+            categories = try context.fetch(request)
+        } catch {
+            print("Error loading categories \(error)")
+        }
+        categoryTableView.reloadData()
+    }
     
     func setupUI() {
         view.backgroundColor = .systemMint
