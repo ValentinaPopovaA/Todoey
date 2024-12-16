@@ -53,8 +53,9 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let todoListVC = TodoListViewController()
         if let indexPath = tableView.indexPathForSelectedRow {
-            
+            todoListVC.selectedCategory = categories[indexPath.row]
         }
+        navigationController?.pushViewController(todoListVC, animated: true)
         saveCategories()
         
         tableView.deselectRow(at: indexPath, animated: true)
